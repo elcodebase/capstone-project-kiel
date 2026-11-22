@@ -1,10 +1,11 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'create.dart';
 import 'header.dart';
 import 'kartumood.dart';
-import 'mood.dart';
+import 'moodEntry.dart';
 import 'streak.dart';
+import 'moodType.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -14,22 +15,49 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  // Selalu terurut dari yang terbaru.
   final List<MoodEntry> _daftarMood = _contohData();
 
   static List<MoodEntry> _contohData() {
     final hariIni = hanyaTanggal(DateTime.now());
-    DateTime waktu(int hariLalu, int jam, int menit) =>
-        DateTime(hariIni.year, hariIni.month, hariIni.day - hariLalu, jam, menit);
+    DateTime waktu(int hariLalu, int jam, int menit) => DateTime(
+      hariIni.year,
+      hariIni.month,
+      hariIni.day - hariLalu,
+      jam,
+      menit,
+    );
 
     return [
-      MoodEntry(mood: MoodType.bersemangat, waktu: waktu(0, 14, 20), catatan: 'Dapat kabar baik dari klien'),
-      MoodEntry(mood: MoodType.tenang, waktu: waktu(0, 11, 0), catatan: 'Meditasi pagi terasa menenangkan'),
-      MoodEntry(mood: MoodType.senang, waktu: waktu(0, 8, 30), catatan: 'Pagi yang cerah dan segar'),
-      MoodEntry(mood: MoodType.sedih, waktu: waktu(1, 20, 15), catatan: 'Kangen rumah tiba-tiba'),
-      MoodEntry(mood: MoodType.cemas, waktu: waktu(1, 9, 0), catatan: 'Deadline bikin deg-degan'),
+      MoodEntry(
+        mood: MoodType.bersemangat,
+        waktu: waktu(0, 14, 20),
+        catatan: 'Dapat kabar baik dari klien',
+      ),
+      MoodEntry(
+        mood: MoodType.tenang,
+        waktu: waktu(0, 11, 0),
+        catatan: 'Meditasi pagi terasa menenangkan',
+      ),
+      MoodEntry(
+        mood: MoodType.senang,
+        waktu: waktu(0, 8, 30),
+        catatan: 'Pagi yang cerah dan segar',
+      ),
+      MoodEntry(
+        mood: MoodType.sedih,
+        waktu: waktu(1, 20, 15),
+        catatan: 'Kangen rumah tiba-tiba',
+      ),
+      MoodEntry(
+        mood: MoodType.cemas,
+        waktu: waktu(1, 9, 0),
+        catatan: 'Deadline bikin deg-degan',
+      ),
     ];
   }
 
+  /// Berapa hari berturut-turut (mundur dari hari ini) yang ada catatan mood.
   int get _streak {
     var hari = hanyaTanggal(DateTime.now());
     var jumlah = 0;
@@ -66,11 +94,10 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     return Scaffold(
-      backgroundColor: warnaLatar,
       floatingActionButton: FloatingActionButton(
         onPressed: _tambahMood,
-        backgroundColor: warnaUtama,
-        foregroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        foregroundColor: Theme.of(context).colorScheme.onPrimary,
         shape: const CircleBorder(),
         child: const Icon(Icons.add),
       ),

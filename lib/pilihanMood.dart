@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'moodFace.dart';
-import 'mood.dart';
+import 'moodType.dart';
 
 class PilihanMood extends StatelessWidget {
   const PilihanMood({
@@ -22,9 +22,13 @@ class PilihanMood extends StatelessWidget {
       borderRadius: BorderRadius.circular(14),
       child: Container(
         decoration: BoxDecoration(
-          color: dipilih ? mood.color : Colors.white,
+          color: dipilih ? mood.color : Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: dipilih ? mood.color : Colors.black12),
+          border: Border.all(
+            color: dipilih
+                ? mood.color
+                : Theme.of(context).colorScheme.outlineVariant,
+          ),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -36,6 +40,7 @@ class PilihanMood extends StatelessWidget {
               style: TextStyle(
                 fontSize: 11,
                 fontWeight: dipilih ? FontWeight.w700 : FontWeight.w500,
+                color: dipilih ? Colors.black : null,
               ),
             ),
           ],

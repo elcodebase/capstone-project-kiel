@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
-import 'mood.dart';
+import 'moodType.dart';
 
 class MoodFace extends StatelessWidget {
   const MoodFace({super.key, required this.mood, this.size = 44});

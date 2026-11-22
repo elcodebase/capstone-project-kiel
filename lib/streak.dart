@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-
-import 'mood.dart';
+import 'package:material_ui/material_ui.dart';
 
 class StreakChip extends StatelessWidget {
   const StreakChip({super.key, required this.hari});
@@ -11,8 +9,11 @@ class StreakChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Chip(
       label: Text('🔥 $hari hari berturut-turut mencatat mood'),
-      labelStyle: const TextStyle(fontSize: 12, color: warnaUtama),
-      backgroundColor: const Color(0xFFE9E4FA),
+      labelStyle: TextStyle(
+        fontSize: 12,
+        color: Theme.of(context).colorScheme.onPrimaryContainer,
+      ),
+      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       side: BorderSide.none,
     );
   }

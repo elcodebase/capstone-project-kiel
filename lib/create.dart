@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'label.dart';
-import 'mood.dart';
+import 'moodEntry.dart';
 import 'pilihanMood.dart';
+import 'moodType.dart';
 
 const _border = OutlineInputBorder(
   borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -59,10 +60,7 @@ class _CreateMoodPageState extends State<CreateMoodPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        surfaceTintColor: Colors.transparent,
         centerTitle: true,
 
         title: const Text(
@@ -135,7 +133,6 @@ class _CreateMoodPageState extends State<CreateMoodPage> {
                 onPressed: _simpan,
 
                 style: FilledButton.styleFrom(
-                  backgroundColor: warnaUtama,
                   minimumSize: const Size.fromHeight(48),
                 ),
                 child: const Text('Simpan Mood'),

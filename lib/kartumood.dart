@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'moodFace.dart';
-import 'mood.dart';
+import 'moodEntry.dart';
 
 class KartuMood extends StatelessWidget {
   const KartuMood({super.key, required this.entry, required this.onHapus});
@@ -14,7 +14,6 @@ class KartuMood extends StatelessWidget {
     final catatan = entry.catatan.isEmpty ? 'Tanpa catatan' : entry.catatan;
 
     return Card(
-      color: Colors.white,
       margin: const EdgeInsets.only(bottom: 12),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
       child: ListTile(

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class Label extends StatelessWidget {
   const Label(this.teks, {super.key});
@@ -9,7 +9,10 @@ class Label extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       teks,
-      style: const TextStyle(fontSize: 12, color: Colors.black54),
+      style: TextStyle(
+        fontSize: 12,
+        color: Theme.of(context).colorScheme.onSurfaceVariant,
+      ),
     );
   }
 }

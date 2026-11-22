@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
-import 'mood.dart';
+import 'profil.dart';
 
 class Header extends StatelessWidget {
   const Header({super.key, required this.nama});
@@ -19,16 +19,30 @@ class Header extends StatelessWidget {
                 'Halo, $nama 👋',
                 style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
               ),
-              const Text(
+              Text(
                 'Bagaimana perasaanmu hari ini?',
-                style: TextStyle(color: Colors.black54),
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
               ),
             ],
           ),
         ),
-        CircleAvatar(
-          backgroundColor: const Color(0xFFE4DEF7),
-          child: Text(nama[0], style: const TextStyle(color: warnaUtama)),
+        InkWell(
+          customBorder: const CircleBorder(),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const ProfilPage()),
+          ),
+          child: CircleAvatar(
+            backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+            child: Text(
+              nama[0],
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onPrimaryContainer,
+              ),
+            ),
+          ),
         ),
       ],
     );
