@@ -2,6 +2,7 @@ import 'package:material_ui/material_ui.dart';
 
 import 'moodFace.dart';
 import 'moodEntry.dart';
+import 'read.dart';
 
 class KartuMood extends StatelessWidget {
   const KartuMood({super.key, required this.entry, required this.onHapus});
@@ -17,6 +18,10 @@ class KartuMood extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 12),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
       child: ListTile(
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => ReadMoodPage(entry: entry)),
+        ),
         leading: MoodFace(mood: entry.mood),
         title: Text(
           entry.mood.label,

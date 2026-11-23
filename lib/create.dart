@@ -2,7 +2,7 @@ import 'package:material_ui/material_ui.dart';
 
 import 'label.dart';
 import 'moodEntry.dart';
-import 'pilihanMood.dart';
+import 'pilihanmood.dart';
 import 'moodType.dart';
 
 const _border = OutlineInputBorder(
@@ -10,16 +10,19 @@ const _border = OutlineInputBorder(
 );
 
 class CreateMoodPage extends StatefulWidget {
-  const CreateMoodPage({super.key});
+  const CreateMoodPage({super.key, this.entry});
+  final MoodEntry? entry;
 
   @override
   State<CreateMoodPage> createState() => _CreateMoodPageState();
 }
 
 class _CreateMoodPageState extends State<CreateMoodPage> {
-  final _catatanController = TextEditingController();
-  DateTime _tanggal = hanyaTanggal(DateTime.now());
-  MoodType _moodDipilih = MoodType.senang;
+  late final _catatanController = TextEditingController(
+    text: widget.entry?.catatan,
+  );
+  late DateTime _tanggal = hanyaTanggal(widget.entry?.waktu ?? DateTime.now());
+  late MoodType _moodDipilih = widget.entry?.mood ?? MoodType.senang;
 
   @override
   void dispose() {
@@ -63,9 +66,9 @@ class _CreateMoodPageState extends State<CreateMoodPage> {
       appBar: AppBar(
         centerTitle: true,
 
-        title: const Text(
-          'Tambah Mood',
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+        title: Text(
+          widget.entry == null ? 'Tambah Mood' : 'Ubah Mood',
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
         ),
       ),
       body: SafeArea(
