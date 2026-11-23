@@ -1,7 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-final tema = ValueNotifier(ThemeMode.system);
+final tema = ValueNotifier(ThemeMode.light);
 
 ThemeData bangunTema(Brightness b) {
   final dasar = ThemeData(
