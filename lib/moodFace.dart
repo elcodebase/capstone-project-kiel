@@ -1,4 +1,5 @@
 import 'package:material_ui/material_ui.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'moodType.dart';
 
@@ -10,6 +11,6 @@ class MoodFace extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CircleAvatar(radius: size / 2, backgroundColor: mood.color);
+    return SvgPicture.asset('assets/images/landingPageAssets/${mood.name}.svg', width: size, height: size);
   }
 }
