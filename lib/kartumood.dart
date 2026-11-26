@@ -5,9 +5,10 @@ import 'moodEntry.dart';
 import 'read.dart';
 
 class KartuMood extends StatelessWidget {
-  const KartuMood({super.key, required this.entry, required this.onHapus});
+  const KartuMood({super.key, required this.entry, required this.onUbah, required this.onHapus});
 
   final MoodEntry entry;
+  final ValueChanged<MoodEntry> onUbah;
   final VoidCallback onHapus;
 
   @override
@@ -18,10 +19,10 @@ class KartuMood extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 12),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
       child: ListTile(
-        onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(builder: (_) => ReadMoodPage(entry: entry)),
-        ),
+        onTap: () async {
+          final hasil = await Navigator.push<MoodEntry>(context, MaterialPageRoute(builder: (_) => ReadMoodPage(entry: entry)));
+          if (hasil != null) onUbah(hasil);
+        },
         leading: MoodFace(mood: entry.mood),
         title: Text(
           entry.mood.label,

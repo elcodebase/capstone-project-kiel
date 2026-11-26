@@ -1,9 +1,12 @@
 import 'package:material_ui/material_ui.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import 'onboarding.dart';
 import 'tema.dart';
 
-void main() {
+Future<void> main() async {
+  await Hive.initFlutter();
+  await Hive.openBox('mood');
   runApp(const MyApp());
 }
 

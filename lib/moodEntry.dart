@@ -3,9 +3,14 @@ import 'moodType.dart';
 class MoodEntry {
   const MoodEntry({required this.mood, required this.waktu, this.catatan = ''});
 
+  factory MoodEntry.fromMap(Map data) =>
+      MoodEntry(mood: MoodType.values.byName(data['mood']), waktu: DateTime.parse(data['waktu']), catatan: data['catatan']);
+
   final MoodType mood;
   final DateTime waktu;
   final String catatan;
+
+  Map<String, String> toMap() => {'mood': mood.name, 'waktu': waktu.toIso8601String(), 'catatan': catatan};
 }
 
 DateTime hanyaTanggal(DateTime d) => DateTime(d.year, d.month, d.day);

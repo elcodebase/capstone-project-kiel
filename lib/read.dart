@@ -29,13 +29,10 @@ class ReadMoodPage extends StatelessWidget {
 
               const Spacer(),
               FilledButton(
-                onPressed: () => Navigator.push(
-                  context,
-
-                  MaterialPageRoute(
-                    builder: (_) => CreateMoodPage(entry: entry),
-                  ),
-                ),
+                onPressed: () async {
+                  final hasil = await Navigator.push<MoodEntry>(context, MaterialPageRoute(builder: (_) => CreateMoodPage(entry: entry)));
+                  if (hasil != null && context.mounted) Navigator.pop(context, hasil);
+                },
                 style: FilledButton.styleFrom(
                   minimumSize: const Size.fromHeight(48),
                 ),

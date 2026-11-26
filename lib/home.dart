@@ -1,4 +1,5 @@
 import 'package:material_ui/material_ui.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import 'create.dart';
 import 'header.dart';
@@ -15,8 +16,20 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final _box = Hive.box('mood');
+
   // Selalu terurut dari yang terbaru.
-  final List<MoodEntry> _daftarMood = _contohData();
+  late final List<MoodEntry> _daftarMood = _muatData();
+
+  List<MoodEntry> _muatData() {
+    final data = _box.get('daftar') as List?;
+    if (data == null) return _contohData();
+    return [for (final item in data) MoodEntry.fromMap(item)];
+  }
+
+  Future<void> _simpanData() async {
+    await _box.put('daftar', [for (final e in _daftarMood) e.toMap()]);
+  }
 
   static List<MoodEntry> _contohData() {
     final hariIni = hanyaTanggal(DateTime.now());
@@ -84,6 +97,20 @@ class _MyHomePageState extends State<MyHomePage> {
       _daftarMood.add(hasil);
       _daftarMood.sort((a, b) => b.waktu.compareTo(a.waktu));
     });
+    await _simpanData();
+  }
+
+  Future<void> _ubahMood(MoodEntry lama, MoodEntry baru) async {
+    setState(() {
+      _daftarMood[_daftarMood.indexOf(lama)] = baru;
+      _daftarMood.sort((a, b) => b.waktu.compareTo(a.waktu));
+    });
+    await _simpanData();
+  }
+
+  Future<void> _hapusMood(MoodEntry entry) async {
+    setState(() => _daftarMood.remove(entry));
+    await _simpanData();
   }
 
   @override
@@ -130,7 +157,8 @@ class _MyHomePageState extends State<MyHomePage> {
               for (final entry in kelompok.value)
                 KartuMood(
                   entry: entry,
-                  onHapus: () => setState(() => _daftarMood.remove(entry)),
+                  onUbah: (baru) => _ubahMood(entry, baru),
+                  onHapus: () => _hapusMood(entry),
                 ),
             ],
           ],

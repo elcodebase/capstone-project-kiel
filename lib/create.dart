@@ -2,7 +2,7 @@ import 'package:material_ui/material_ui.dart';
 
 import 'label.dart';
 import 'moodEntry.dart';
-import 'pilihanmood.dart';
+import 'pilihanMood.dart';
 import 'moodType.dart';
 
 const _border = OutlineInputBorder(
@@ -47,7 +47,7 @@ class _CreateMoodPageState extends State<CreateMoodPage> {
   }
 
   void _simpan() {
-    final sekarang = DateTime.now();
+    final sekarang = widget.entry?.waktu ?? DateTime.now();
     final waktu = _tanggal.add(
       Duration(hours: sekarang.hour, minutes: sekarang.minute),
     );
