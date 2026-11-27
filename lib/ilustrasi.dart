@@ -19,6 +19,7 @@ class Ilustrasi extends StatelessWidget {
         width: 390,
         height: 400,
         child: Stack(
+          clipBehavior: Clip.none,
           children: switch (halaman) {
             0 => [_gambar('pinkcircle', -60, 0), _gambar('greycircle', 207, 173), _gambar('yellowsmile', 131, 116)],
             1 => [

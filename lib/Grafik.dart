@@ -23,15 +23,17 @@ class Grafik extends StatelessWidget {
             leftTitles: const AxisTitles(sideTitles: SideTitles(showTitles: true, interval: 1)),
             bottomTitles: AxisTitles(sideTitles: SideTitles(showTitles: true, getTitlesWidget: (x, meta) => Text('${minggu[x.toInt()].day}'))),
           ),
+          gridData: const FlGridData(show: false),
+          borderData: FlBorderData(show: false),
         ),
       ),
     );
   }
 
   BarChartGroupData _batang(int x, DateTime hari) { //bb
-    final isi = daftar.where((e) => hanyaTanggal(e.waktu) == hari).toList();
+    final isi = daftar.reversed.where((e) => hanyaTanggal(e.waktu) == hari).toList();
     final warna = [for (var i = 0; i < isi.length; i++) BarChartRodStackItem(i.toDouble(), i + 1, isi[i].mood.color)];
-    return BarChartGroupData(x: x, barRods: [BarChartRodData(toY: isi.length.toDouble(), width: 20, rodStackItems: warna)],
+    return BarChartGroupData(x: x, barRods: [BarChartRodData(toY: isi.length.toDouble(), width: 20, color: Colors.transparent, borderRadius: BorderRadius.circular(4), rodStackItems:  warna)],
     );
   }
 }

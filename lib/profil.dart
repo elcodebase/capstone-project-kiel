@@ -46,7 +46,7 @@ class ProfilPage extends StatelessWidget {
                   radius: 48,
                   backgroundColor: warna.primary,
                   foregroundColor: warna.onPrimary,
-                  child: Text(nama[0].toUpperCase(), style: const TextStyle(fontSize: 36)),
+                  child: Text(nama.characters.first.toUpperCase(), style: const TextStyle(fontSize: 36)),
                 ),
                 const SizedBox(height: 12),
                 Text(nama, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
