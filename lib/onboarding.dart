@@ -1,6 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 
-import 'home.dart';
+import 'Landing.dart';
 import 'ilustrasi.dart';
 import 'titik.dart';
 
@@ -20,7 +20,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
   ];
 
   void _selesai() {
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const MyHomePage()));
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const LandingPage()));
   }
 
   @override
@@ -96,3 +96,5 @@ class _OnboardingPageState extends State<OnboardingPage> {
     );
   }
 }
+
+//59573

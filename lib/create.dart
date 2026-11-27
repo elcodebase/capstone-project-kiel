@@ -10,8 +10,9 @@ const _border = OutlineInputBorder(
 );
 
 class CreateMoodPage extends StatefulWidget {
-  const CreateMoodPage({super.key, this.entry});
+  const CreateMoodPage({super.key, this.entry, this.lihat = false});
   final MoodEntry? entry;
+  final bool lihat; // true = hanya membaca, tidak bisa diubah
 
   @override
   State<CreateMoodPage> createState() => _CreateMoodPageState();
@@ -23,6 +24,12 @@ class _CreateMoodPageState extends State<CreateMoodPage> {
   );
   late DateTime _tanggal = hanyaTanggal(widget.entry?.waktu ?? DateTime.now());
   late MoodType _moodDipilih = widget.entry?.mood ?? MoodType.senang;
+  late bool _lihat = widget.lihat;
+
+  String get _judul {
+    if (_lihat) return 'Detail Mood';
+    return widget.entry == null ? 'Tambah Mood' : 'Ubah Mood';
+  }
 
   @override
   void dispose() {
@@ -67,9 +74,12 @@ class _CreateMoodPageState extends State<CreateMoodPage> {
         centerTitle: true,
 
         title: Text(
-          widget.entry == null ? 'Tambah Mood' : 'Ubah Mood',
+          _judul,
           style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
         ),
+        actions: [
+          if (_lihat) IconButton(icon: const Icon(Icons.edit_outlined), onPressed: () => setState(() => _lihat = false)),
+        ],
       ),
       body: SafeArea(
         child: Padding(
@@ -84,7 +94,7 @@ class _CreateMoodPageState extends State<CreateMoodPage> {
                       const Label('Tanggal'),
                       const SizedBox(height: 8),
                       InkWell(
-                        onTap: _pilihTanggal,
+                        onTap: _lihat ? null : _pilihTanggal,
                         child: InputDecorator(
                           decoration: const InputDecoration(
                             border: _border,
@@ -110,7 +120,7 @@ class _CreateMoodPageState extends State<CreateMoodPage> {
                             PilihanMood(
                               mood: mood,
                               dipilih: mood == _moodDipilih,
-                              onTap: () => setState(() => _moodDipilih = mood),
+                              onTap: () => _lihat ? null : setState(() => _moodDipilih = mood),
                             ),
                         ],
                       ),
@@ -119,6 +129,7 @@ class _CreateMoodPageState extends State<CreateMoodPage> {
                       const SizedBox(height: 8),
                       TextField(
                         controller: _catatanController,
+                        readOnly: _lihat,
                         minLines: 5,
                         maxLines: 5,
                         decoration: const InputDecoration(
@@ -132,6 +143,7 @@ class _CreateMoodPageState extends State<CreateMoodPage> {
               ),
 
               const SizedBox(height: 12),
+              if (!_lihat)
               FilledButton(
                 onPressed: _simpan,
 

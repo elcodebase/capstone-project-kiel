@@ -37,7 +37,7 @@ class Header extends StatelessWidget {
           child: CircleAvatar(
             backgroundColor: Theme.of(context).colorScheme.primaryContainer,
             child: Text(
-              nama[0],
+              nama.characters.first,
               style: TextStyle(
                 color: Theme.of(context).colorScheme.onPrimaryContainer,
               ),

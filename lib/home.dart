@@ -7,6 +7,9 @@ import 'kartumood.dart';
 import 'moodEntry.dart';
 import 'streak.dart';
 import 'moodType.dart';
+import 'moodFace.dart';
+import 'navgation.dart';
+import 'profil.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -17,20 +20,25 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final _box = Hive.box('mood');
+  int _tab = 0;
+
+  // Catatan disimpan terpisah untuk tiap akun.
+  String get _kunci => 'daftar_${_box.get('email')}';
 
   // Selalu terurut dari yang terbaru.
   late final List<MoodEntry> _daftarMood = _muatData();
 
   List<MoodEntry> _muatData() {
-    final data = _box.get('daftar') as List?;
-    if (data == null) return _contohData();
+    final data = _box.get(_kunci) as List?;
+    if (data == null) return [];
     return [for (final item in data) MoodEntry.fromMap(item)];
   }
 
   Future<void> _simpanData() async {
-    await _box.put('daftar', [for (final e in _daftarMood) e.toMap()]);
+    await _box.put(_kunci, [for (final e in _daftarMood) e.toMap()]);
   }
 
+  // ignore: unused_element
   static List<MoodEntry> _contohData() {
     final hariIni = hanyaTanggal(DateTime.now());
     DateTime waktu(int hariLalu, int jam, int menit) => DateTime(
@@ -120,33 +128,36 @@ class _MyHomePageState extends State<MyHomePage> {
       perHari.putIfAbsent(hanyaTanggal(entry.waktu), () => []).add(entry);
     }
 
+    final navbar = Nav(aktif: _tab, onPilih: (i) => setState(() => _tab = i), onTambah: _tambahMood);
+    if (_tab == 1) return Scaffold(bottomNavigationBar: navbar, body: ProfilPage());
+
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: _tambahMood,
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        foregroundColor: Theme.of(context).colorScheme.onPrimary,
-        shape: const CircleBorder(),
-        child: const Icon(Icons.add),
-      ),
+      backgroundColor: Theme.of(context).colorScheme.surfaceContainerLowest,
+      bottomNavigationBar: navbar,
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.fromLTRB(20, 16, 20, 96),
           children: [
-            const Header(nama: 'Zika'),
+            Header(nama: _box.get('nama') ?? 'Teman'),
             const SizedBox(height: 16),
             if (_streak > 0)
               Align(
                 alignment: Alignment.centerLeft,
                 child: StreakChip(hari: _streak),
               ),
-            if (perHari.isEmpty)
-              const Padding(
-                padding: EdgeInsets.only(top: 80),
-                child: Text(
-                  'Belum ada catatan mood.\nTekan + untuk menambahkan.',
-                  textAlign: TextAlign.center,
+            if (perHari.isEmpty) ...[
+              // Jarak ini mendorong pesan ke tengah layar.
+              SizedBox(height: MediaQuery.of(context).size.height * 0.25),
+              const Center(child: MoodFace(mood: MoodType.senang, size: 96)),
+              const SizedBox(height: 16),
+              Text(
+                'Belum ada catatan mood.\nTekan + untuk menambahkan.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
               ),
+            ],
             for (final kelompok in perHari.entries) ...[
               const SizedBox(height: 12),
               Text(
